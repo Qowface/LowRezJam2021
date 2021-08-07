@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LowRezJam2021.States;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace LowRezJam2021
 {
@@ -15,7 +17,9 @@ namespace LowRezJam2021
         private RenderTarget2D _nativeRenderTarget;
         private Rectangle _actualScreenRectangle;
 
-        Texture2D[] numTextures;
+        public static Dictionary<string, Texture2D> Textures;
+
+        private IState _gameState;
 
         public Game1()
         {
@@ -39,11 +43,13 @@ namespace LowRezJam2021
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            numTextures = new Texture2D[4];
-            numTextures[0] = Content.Load<Texture2D>("0");
-            numTextures[1] = Content.Load<Texture2D>("1");
-            numTextures[2] = Content.Load<Texture2D>("2");
-            numTextures[3] = Content.Load<Texture2D>("3");
+            Textures = new Dictionary<string, Texture2D>();
+            Textures.Add("0", Content.Load<Texture2D>("0"));
+            Textures.Add("1", Content.Load<Texture2D>("1"));
+            Textures.Add("2", Content.Load<Texture2D>("2"));
+            Textures.Add("3", Content.Load<Texture2D>("3"));
+
+            _gameState = new PlayState();
         }
 
         protected override void Update(GameTime gameTime)
@@ -51,7 +57,7 @@ namespace LowRezJam2021
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _gameState.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -62,10 +68,7 @@ namespace LowRezJam2021
             GraphicsDevice.Clear(Color.Transparent);
             _spriteBatch.Begin();
 
-            _spriteBatch.Draw(numTextures[0], new Vector2(2, 2), Color.White);
-            _spriteBatch.Draw(numTextures[1], new Vector2(12, 12), Color.White);
-            _spriteBatch.Draw(numTextures[2], new Vector2(22, 22), Color.White);
-            _spriteBatch.Draw(numTextures[3], new Vector2(32, 32), Color.White);
+            _gameState.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
