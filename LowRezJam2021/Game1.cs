@@ -49,6 +49,7 @@ namespace LowRezJam2021
             Textures.Add("2", Content.Load<Texture2D>("2"));
             Textures.Add("3", Content.Load<Texture2D>("3"));
             Textures.Add("cursor", Content.Load<Texture2D>("cursor"));
+            Textures.Add("nums", Content.Load<Texture2D>("nums"));
 
             _gameState = new PlayState();
         }
@@ -66,7 +67,7 @@ namespace LowRezJam2021
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(_nativeRenderTarget);
-            GraphicsDevice.Clear(Color.Transparent);
+            GraphicsDevice.Clear(new Color(27, 38, 50));
             _spriteBatch.Begin();
 
             _gameState.Draw(gameTime, _spriteBatch);
