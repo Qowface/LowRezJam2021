@@ -48,6 +48,7 @@ namespace LowRezJam2021
             Textures.Add("1", Content.Load<Texture2D>("1"));
             Textures.Add("2", Content.Load<Texture2D>("2"));
             Textures.Add("3", Content.Load<Texture2D>("3"));
+            Textures.Add("back", Content.Load<Texture2D>("back"));
             Textures.Add("cursor", Content.Load<Texture2D>("cursor"));
             Textures.Add("nums", Content.Load<Texture2D>("nums"));
 
