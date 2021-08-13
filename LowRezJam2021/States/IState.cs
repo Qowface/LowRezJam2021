@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace LowRezJam2021.States
 {
-    interface IState
+    public interface IState
     {
         void Update(GameTime gameTime);
 

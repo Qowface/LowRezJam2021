@@ -1,4 +1,5 @@
-﻿using LowRezJam2021.States;
+﻿using LowRezJam2021.Helpers;
+using LowRezJam2021.States;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,7 +20,9 @@ namespace LowRezJam2021
 
         public static Dictionary<string, Texture2D> Textures;
 
-        private IState _gameState;
+        public static Input Input;
+
+        public static StateManager States;
 
         public Game1()
         {
@@ -52,7 +55,10 @@ namespace LowRezJam2021
             Textures.Add("cursor", Content.Load<Texture2D>("cursor"));
             Textures.Add("nums", Content.Load<Texture2D>("nums"));
 
-            _gameState = new PlayState();
+            Input = new Input();
+            
+            States = new StateManager();
+            States.Push(new PlayState());
         }
 
         protected override void Update(GameTime gameTime)
@@ -60,7 +66,9 @@ namespace LowRezJam2021
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _gameState.Update(gameTime);
+            Input.Update(gameTime);
+            
+            States.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -71,7 +79,7 @@ namespace LowRezJam2021
             GraphicsDevice.Clear(new Color(27, 38, 50));
             _spriteBatch.Begin();
 
-            _gameState.Draw(gameTime, _spriteBatch);
+            States.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);

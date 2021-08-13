@@ -12,9 +12,6 @@ namespace LowRezJam2021.States
         private Texture2D _numsTexture;
         private Texture2D _cursorTexture;
 
-        private KeyboardState _currentKeys;
-        private KeyboardState _previousKeys;
-
         private Board _board;
         private Vector2 _cursor;
 
@@ -29,29 +26,26 @@ namespace LowRezJam2021.States
             _numsTexture = Game1.Textures["nums"];
             _cursorTexture = Game1.Textures["cursor"];
 
-            _currentKeys = _previousKeys = Keyboard.GetState();
-
             _board = new Board(5, 5);
             _cursor = new Vector2(2, 2);
         }
         
         public void Update(GameTime gameTime)
         {
-            _currentKeys = Keyboard.GetState();
+            if (Game1.Input.WasKeyJustDown(Keys.Right) && _cursor.X < _board.Cols - 1) _cursor.X++;
+            if (Game1.Input.WasKeyJustDown(Keys.Left) && _cursor.X > 0) _cursor.X--;
+            if (Game1.Input.WasKeyJustDown(Keys.Down) && _cursor.Y < _board.Rows - 1) _cursor.Y++;
+            if (Game1.Input.WasKeyJustDown(Keys.Up) && _cursor.Y > 0) _cursor.Y--;
+            if (Game1.Input.WasKeyJustDown(Keys.Space)) _board.FlipTile((int)_cursor.Y, (int)_cursor.X);
 
-            if (WasKeyJustDown(Keys.Right) && _cursor.X < _board.Cols - 1) _cursor.X++;
-            if (WasKeyJustDown(Keys.Left) && _cursor.X > 0) _cursor.X--;
-            if (WasKeyJustDown(Keys.Down) && _cursor.Y < _board.Rows - 1) _cursor.Y++;
-            if (WasKeyJustDown(Keys.Up) && _cursor.Y > 0) _cursor.Y--;
-
-            if (WasKeyJustDown(Keys.Space)) _board.FlipTile((int)_cursor.Y, (int)_cursor.X);
-
-            _previousKeys = _currentKeys;
-        }
-
-        public bool WasKeyJustDown(Keys key)
-        {
-            return _currentKeys.IsKeyDown(key) && !_previousKeys.IsKeyDown(key);
+            if (_board.Won)
+            {
+                Game1.States.Set(new EndState(true));
+            }
+            else if (_board.Lost)
+            {
+                Game1.States.Set(new EndState(false));
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
