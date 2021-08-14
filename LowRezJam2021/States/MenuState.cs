@@ -17,7 +17,11 @@ namespace LowRezJam2021.States
         
         public void Update(GameTime gameTime)
         {
-            if (Game1.Input.WasKeyJustDown(Keys.Space)) Game1.States.Set(new PlayState());
+            if (Game1.Input.WasKeyJustDown(Keys.Space))
+            {
+                Game1.Sounds["ding"].Play(0.5f, 0.0f, 0.0f);
+                Game1.States.Set(new PlayState());
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
