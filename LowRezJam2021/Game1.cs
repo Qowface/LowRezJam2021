@@ -55,6 +55,8 @@ namespace LowRezJam2021
             Textures.Add("cursor", Content.Load<Texture2D>("cursor"));
             Textures.Add("gameover", Content.Load<Texture2D>("gameover"));
             Textures.Add("nums", Content.Load<Texture2D>("nums"));
+            Textures.Add("restart", Content.Load<Texture2D>("restart"));
+            Textures.Add("start", Content.Load<Texture2D>("start"));
             Textures.Add("title", Content.Load<Texture2D>("title"));
             Textures.Add("youwin", Content.Load<Texture2D>("youwin"));
 
