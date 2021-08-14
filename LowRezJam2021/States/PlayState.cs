@@ -36,7 +36,22 @@ namespace LowRezJam2021.States
             if (Game1.Input.WasKeyJustDown(Keys.Left) && _cursor.X > 0) _cursor.X--;
             if (Game1.Input.WasKeyJustDown(Keys.Down) && _cursor.Y < _board.Rows - 1) _cursor.Y++;
             if (Game1.Input.WasKeyJustDown(Keys.Up) && _cursor.Y > 0) _cursor.Y--;
-            if (Game1.Input.WasKeyJustDown(Keys.Space)) _board.FlipTile((int)_cursor.Y, (int)_cursor.X);
+            if (Game1.Input.WasKeyJustDown(Keys.Space))
+            {
+                bool flipped = _board.FlipTile((int)_cursor.Y, (int)_cursor.X);
+                if (_board.Won)
+                {
+                    Game1.Sounds["win"].Play();
+                }
+                else if (_board.Lost)
+                {
+                    Game1.Sounds["lose"].Play();
+                }
+                else if (flipped)
+                {
+                    Game1.Sounds["ding"].Play(0.5f, 0.0f, 0.0f);
+                }
+            }
 
             if (_board.Won)
             {

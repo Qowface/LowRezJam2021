@@ -1,6 +1,7 @@
 ﻿using LowRezJam2021.Helpers;
 using LowRezJam2021.States;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace LowRezJam2021
         private Rectangle _actualScreenRectangle;
 
         public static Dictionary<string, Texture2D> Textures;
+        public static Dictionary<string, SoundEffect> Sounds;
 
         public static Input Input;
 
@@ -59,6 +61,11 @@ namespace LowRezJam2021
             Textures.Add("start", Content.Load<Texture2D>("start"));
             Textures.Add("title", Content.Load<Texture2D>("title"));
             Textures.Add("youwin", Content.Load<Texture2D>("youwin"));
+
+            Sounds = new Dictionary<string, SoundEffect>();
+            Sounds.Add("ding", Content.Load<SoundEffect>("ding"));
+            Sounds.Add("lose", Content.Load<SoundEffect>("lose"));
+            Sounds.Add("win", Content.Load<SoundEffect>("win"));
 
             Input = new Input();
             

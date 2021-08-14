@@ -85,6 +85,12 @@
 /processorParam:TextureFormat=Color
 /build:cursor.png
 
+#begin ding.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:ding.wav
+
 #begin gameover.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -96,6 +102,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gameover.png
+
+#begin lose.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:lose.wav
 
 #begin nums.png
 /importer:TextureImporter
@@ -144,6 +156,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:title.png
+
+#begin win.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:win.wav
 
 #begin youwin.png
 /importer:TextureImporter
