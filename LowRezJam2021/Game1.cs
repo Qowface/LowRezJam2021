@@ -53,12 +53,15 @@ namespace LowRezJam2021
             Textures.Add("3", Content.Load<Texture2D>("3"));
             Textures.Add("back", Content.Load<Texture2D>("back"));
             Textures.Add("cursor", Content.Load<Texture2D>("cursor"));
+            Textures.Add("gameover", Content.Load<Texture2D>("gameover"));
             Textures.Add("nums", Content.Load<Texture2D>("nums"));
+            Textures.Add("title", Content.Load<Texture2D>("title"));
+            Textures.Add("youwin", Content.Load<Texture2D>("youwin"));
 
             Input = new Input();
             
             States = new StateManager();
-            States.Push(new PlayState());
+            States.Push(new MenuState());
         }
 
         protected override void Update(GameTime gameTime)
