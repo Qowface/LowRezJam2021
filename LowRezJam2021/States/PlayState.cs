@@ -1,5 +1,6 @@
 ﻿using LowRezJam2021.GameLogic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,8 +13,13 @@ namespace LowRezJam2021.States
         private Texture2D _numsTexture;
         private Texture2D _cursorTexture;
 
+        private SoundEffectInstance _winSound;
+        private SoundEffectInstance _loseSound;
+
         private Board _board;
         private Vector2 _cursor;
+
+        private bool _gameActive;
 
         public PlayState()
         {
@@ -26,12 +32,28 @@ namespace LowRezJam2021.States
             _numsTexture = Game1.Textures["nums"];
             _cursorTexture = Game1.Textures["cursor"];
 
+            _winSound = Game1.Sounds["win"].CreateInstance();
+            _loseSound = Game1.Sounds["lose"].CreateInstance();
+
             _board = new Board(5, 5);
             _cursor = new Vector2(2, 2);
+
+            _gameActive = true;
         }
         
         public void Update(GameTime gameTime)
         {
+            if (_board.Won)
+            {
+                if (_winSound.State == SoundState.Stopped) Game1.States.Set(new EndState(true));
+            }
+            else if (_board.Lost)
+            {
+                if (_loseSound.State == SoundState.Stopped) Game1.States.Set(new EndState(false));
+            }
+
+            if (!_gameActive) return;
+
             if (Game1.Input.WasKeyJustDown(Keys.Right) && _cursor.X < _board.Cols - 1) _cursor.X++;
             if (Game1.Input.WasKeyJustDown(Keys.Left) && _cursor.X > 0) _cursor.X--;
             if (Game1.Input.WasKeyJustDown(Keys.Down) && _cursor.Y < _board.Rows - 1) _cursor.Y++;
@@ -41,25 +63,18 @@ namespace LowRezJam2021.States
                 bool flipped = _board.FlipTile((int)_cursor.Y, (int)_cursor.X);
                 if (_board.Won)
                 {
-                    Game1.Sounds["win"].Play();
+                    _winSound.Play();
+                    _gameActive = false;
                 }
                 else if (_board.Lost)
                 {
-                    Game1.Sounds["lose"].Play();
+                    _loseSound.Play();
+                    _gameActive = false;
                 }
                 else if (flipped)
                 {
                     Game1.Sounds["ding"].Play(0.5f, 0.0f, 0.0f);
                 }
-            }
-
-            if (_board.Won)
-            {
-                Game1.States.Set(new EndState(true));
-            }
-            else if (_board.Lost)
-            {
-                Game1.States.Set(new EndState(false));
             }
         }
 
